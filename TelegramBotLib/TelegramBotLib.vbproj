@@ -67,6 +67,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CCommandObject.vb" />
+    <Compile Include="CTelegramResponse.vb" />
     <Compile Include="CMarkup.vb" />
     <Compile Include="CTBot.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

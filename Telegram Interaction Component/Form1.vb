@@ -1,9 +1,10 @@
 ﻿Imports TelegramBotLib
+Imports TelegramBotLib.CMarkup
 Public Class Form1
     Private telecom As New TelegramBotLib.CTBot
     Private cObjCollection As New Collection
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Send.Click
-        RichTextBox1.Text = telecom.SendTelegramMessage(RichTextBoxInput.Text).Text
+        RichTextBox1.Text = telecom.SendTelegramMessage(RichTextBoxInput.Text.spoiler).Text
     End Sub
 
     Private Sub GetUpdates_Click(sender As Object, e As EventArgs) Handles GetUpdates.Click
@@ -21,7 +22,7 @@ Public Class Form1
     End Function
 
     Sub Loaded() Handles Me.Load
-        Dim cObject As New TelegramBotLib.commandObject("/help", Me, "test", vbMethod)
+        Dim cObject As New TelegramBotLib.CCommandObject("/help", Me, "test", vbMethod)
         cObjCollection.Add(cObject, cObject.Command)
         cObjCollection.Item("/help").CallCommand(cObjCollection.Item("/help"))
     End Sub
