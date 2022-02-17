@@ -1,4 +1,5 @@
-﻿' This class is used to link together any custom Telegram command and function, what handles it
+﻿Imports System.Runtime.CompilerServices
+' This class is used to link together any custom Telegram command and function, what handles it
 ' Using this object function with name "commandObjectFunctionName" what exists in environment
 ' "commandObjectObjectRef" (Class, for example) can be called with ease using this object function
 ' "CallCommand", what gets array of optional parameters, and returns result of called function with
@@ -98,4 +99,106 @@ Public Class CCommandObject
         End If
     End Function
 End Class
+Public Class CCommandObjectCollection
+    Private objCol As New Collection
+    Private objColIsEmpty As New Boolean
+    Public ReadOnly Property IsEmpty As Boolean
+        Get
+            Return objColIsEmpty
+        End Get
+    End Property
+    ' Return number of objects in collection
+    Public ReadOnly Property Count As Integer
+        Get
+            Return objCol.Count
+        End Get
+    End Property
+    ' Get item from collection by key
+    Public Function Item(ByVal key As String) As CCommandObject
+        If (objCol.Contains(key)) Then
+            Dim foundItem = objCol.Item(key)
+            Return foundItem
+        Else
+            Return Nothing
+        End If
+    End Function
+    ' Get item from collection by index
+    Public Function Item(ByVal index As Integer) As CCommandObject
+        If (objCol.Count >= index) Then
+            Dim foundItem = objCol.Item(index)
+            Return foundItem
+        Else
+            Return Nothing
+        End If
+    End Function
+    Public Function Add(ByRef commandObject As CCommandObject) As CCommandObjectCollection
+        objCol.Add(commandObject, commandObject.Command)
+        If (objCol.Count >= 1) Then
+            objColIsEmpty = False
+        End If
+        Return Me
+    End Function
+    Public Function Remove(ByVal key As String) As CCommandObjectCollection
+        objCol.Remove(key)
+        If (objCol.Count < 1) Then
+            objColIsEmpty = True
+        End If
+        Return Me
+    End Function
+    Public Function Remove(ByVal index As Integer) As CCommandObjectCollection
+        objCol.Remove(index)
+        If (objCol.Count < 1) Then
+            objColIsEmpty = True
+        End If
+        Return Me
+    End Function
+    ' Check if object with key (command) is inside collection
+    Public Function Contains(ByVal key As String) As Boolean
+        Return objCol.Contains(key)
+    End Function
+    ' Check if object with any of this keys (command) is inside collection
+    Public Function Contains(ByVal key() As String) As Boolean
+        Dim i As Integer = 0
+        While (i < key.Length)
+            If (objCol.Contains(key(i))) Then
+                Return True
+            End If
+            i = i + 1
+        End While
+        Return False
+    End Function
+    ' Return "command" strings of all objects in collection as array of strings
+    Public Function List() As String()
+        Dim i As Integer = 1
+        Dim returnable(objCol.Count) As String
+        While (i <= objCol.Count)
+            returnable(i) = DirectCast(objCol(i), CCommandObject).Command
+            i = i + 1
+        End While
+        Return returnable
+    End Function
+    ' Return "command" strings of all objects in collection as string with "command" texts divided with delimiter
+    Public Function AsString(Optional ByVal delimiter As String = ",") As String
+        Dim i As Integer = 1
+        Dim returnable As String = ""
+        While (i <= objCol.Count)
+            returnable = returnable + delimiter + DirectCast(objCol(i), CCommandObject).Command
+            i = i + 1
+        End While
+        Return Right(returnable, returnable.Length - delimiter.Length)
+    End Function
+End Class
 
+Public Module StringArrayConverter
+    ' Turn array of strings into string, with elements of array divided with delimiter
+    <Extension()>
+    Public Function AsString(ByVal arr() As String, Optional ByVal delimiter As String = ",") As String
+        Dim i As Integer = 0
+        Dim returnable As String = ""
+        While (i < arr.Length)
+            returnable = returnable + delimiter + arr(i)
+            i = i + 1
+        End While
+        Return Right(returnable, returnable.Length - delimiter.Length)
+    End Function
+End Module
