@@ -26,6 +26,9 @@ Partial Class Form1
         Me.Send = New System.Windows.Forms.Button()
         Me.GetUpdates = New System.Windows.Forms.Button()
         Me.RichTextBoxInput = New System.Windows.Forms.RichTextBox()
+        Me.GetRawUpdates = New System.Windows.Forms.Button()
+        Me.SendKeyboardButton = New System.Windows.Forms.Button()
+        Me.InputBox = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'RichTextBox1
@@ -62,11 +65,40 @@ Partial Class Form1
         Me.RichTextBoxInput.TabIndex = 4
         Me.RichTextBoxInput.Text = ""
         '
+        'GetRawUpdates
+        '
+        Me.GetRawUpdates.Location = New System.Drawing.Point(236, 12)
+        Me.GetRawUpdates.Name = "GetRawUpdates"
+        Me.GetRawUpdates.Size = New System.Drawing.Size(106, 41)
+        Me.GetRawUpdates.TabIndex = 5
+        Me.GetRawUpdates.Text = "Get Raw Updates"
+        Me.GetRawUpdates.UseVisualStyleBackColor = True
+        '
+        'SendKeyboardButton
+        '
+        Me.SendKeyboardButton.Location = New System.Drawing.Point(348, 12)
+        Me.SendKeyboardButton.Name = "SendKeyboardButton"
+        Me.SendKeyboardButton.Size = New System.Drawing.Size(106, 41)
+        Me.SendKeyboardButton.TabIndex = 6
+        Me.SendKeyboardButton.Text = "Send Keyboard"
+        Me.SendKeyboardButton.UseVisualStyleBackColor = True
+        '
+        'InputBox
+        '
+        Me.InputBox.Location = New System.Drawing.Point(461, 13)
+        Me.InputBox.Name = "InputBox"
+        Me.InputBox.Size = New System.Drawing.Size(327, 40)
+        Me.InputBox.TabIndex = 7
+        Me.InputBox.Text = ""
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.InputBox)
+        Me.Controls.Add(Me.SendKeyboardButton)
+        Me.Controls.Add(Me.GetRawUpdates)
         Me.Controls.Add(Me.RichTextBoxInput)
         Me.Controls.Add(Me.GetUpdates)
         Me.Controls.Add(Me.Send)
@@ -81,4 +113,7 @@ Partial Class Form1
     Friend WithEvents Send As Button
     Friend WithEvents GetUpdates As Button
     Friend WithEvents RichTextBoxInput As RichTextBox
+    Friend WithEvents GetRawUpdates As Button
+    Friend WithEvents SendKeyboardButton As Button
+    Friend WithEvents InputBox As RichTextBox
 End Class

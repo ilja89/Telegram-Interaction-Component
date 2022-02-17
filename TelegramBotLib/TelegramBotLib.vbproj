@@ -68,9 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CCommandObject.vb" />
+    <Compile Include="CInlineKeyboardButtonBuilder.vb" />
+    <Compile Include="CFunctionalExtensions.vb" />
     <Compile Include="CTelegramResponse.vb" />
     <Compile Include="CMarkup.vb" />
-    <Compile Include="CTBot.vb" />
+    <Compile Include="CTelegramBot.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

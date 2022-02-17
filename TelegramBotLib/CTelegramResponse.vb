@@ -82,6 +82,19 @@ Public Class CTelegramResponse
             responseText = errorCode
         End Set
     End Property
+    Public Sub New(json As Newtonsoft.Json.Linq.JObject)
+        If (json.Exists("result", 0).Exists("update_id") IsNot Nothing) Then
+            If (json.Exists("result", 0).Exists("message").Exists("text") IsNot Nothing) Then
+                Text = json.Exists("result", 0).Exists("message").Exists("text")
+            ElseIf (json.Exists("result", 0).Exists("callback_query").Exists("data") IsNot Nothing) Then
+                Text = json.Exists("result", 0).Exists("callback_query").Exists("data")
+            End If
+        Else
+            SetError = "empty"
+        End If
+    End Sub
+    Public Sub New()
 
+    End Sub
 
 End Class

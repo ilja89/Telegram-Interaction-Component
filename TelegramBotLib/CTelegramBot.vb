@@ -1,7 +1,7 @@
 ﻿Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Class CTBot
+Public Class CTelegramBot
     Private telegramBotName As String = ""
     Private telegramBotToken As String = "5207145300:AAGgsp2QZy7L6Ee-63zzLLHtyEMwIe84nhM" 'DEBUG!
     Private telegramChatID As String = "698249543" 'DEBUG!
@@ -81,6 +81,40 @@ Public Class CTBot
         End If
     End Function
 
+    ' This is function to send inline keyboards in Telegram
+    ' It request instance of CInlineKeyboardButtonBuilder to build up a keyboard json
+    ' Returns instance of CTelegramResponse
+    '
+    ' Example:
+    ' Dim keyboard As New TelegramBotLib.CInlineKeyboardButtonBuilder({
+    ' New TelegramBotLib.CInlineKeyboardButton("Help", 1, "/help"),
+    ' New TelegramBotLib.CInlineKeyboardButton("Help short", 1, "/help short"),
+    ' New TelegramBotLib.CInlineKeyboardButton("Help full", 1, "/help full"),
+    ' New TelegramBotLib.CInlineKeyboardButton("btn5", 2, "1234"),
+    ' New TelegramBotLib.CInlineKeyboardButton("btn6", 2, "1234")})
+    ' RichTextBox1.Text = TelegramBotLib.CTelegramBot.sendTelegramInlineKeyboard(InputBox.Text.Replace("%newline", "".newline), keyboard).Text
+    Function sendTelegramInlineKeyboard(keyboard As CInlineKeyboardButtonBuilder, Optional message As String = "Keyboard:")
+        Dim response As New CTelegramResponse
+        If (telegramBotSet = True) Then
+            If (message = "") Then
+                message = "Keyboard:"
+            End If
+
+            Dim xmlhttp As New MSXML2.XMLHTTP60, url As String
+
+            url = "https://api.telegram.org/bot" & BotToken & "/sendMessage?parse_mode=HTML&chat_id=" & ChatID & "&text=" & message &
+                "&reply_markup=" + keyboard.Build
+            xmlhttp.open("POST", url, False)
+            xmlhttp.send()
+            response.Text = xmlhttp.responseText
+            Return response
+        Else
+            response.SetError = "botNotSet"
+            Return response
+        End If
+
+    End Function
+
     ' Function to receive messages from Telegram
     ' Returns text of first message from array of messages received after message with id = optionalOffset (if set) or telMessageOffset
     ' Input = Optional Integer
@@ -90,7 +124,7 @@ Public Class CTBot
     ' "empty" - message request is empty, no messages received since last message
     ' "botNotSet" - bot is not set (checks "Private telegramBotSet As Boolean")
     Function GetUpdate(ByVal Optional optionalOffset As Integer = -1)
-        Dim response As New CTelegramResponse
+        Dim response As CTelegramResponse
         If (telegramBotSet = True) Then
             Dim xmlhttp As New MSXML2.XMLHTTP60, url As String
 
@@ -103,17 +137,34 @@ Public Class CTBot
             xmlhttp.send()
 
             Dim json As JObject = JObject.Parse(xmlhttp.responseText)
-            If (json.SelectToken("result").Count > 0) Then
-                If (json.SelectToken("result")(0).SelectToken("update_id")) Then
-                    telMessageOffset = CInt(json.SelectToken("result")(0).SelectToken("update_id")) + 1
-                End If
-                response.Text = json.SelectToken("result")(0).SelectToken("message").SelectToken("text")
-            Else
-                response.SetError = "empty"
+            ' Check for standart text message or keyboard pressed
+            Dim a = json.Exists("result", 0).Exists("update_id")
+            response = New CTelegramResponse(json)
+            If (json.Exists("result", 0).Exists("update_id") IsNot Nothing) Then
+                telMessageOffset = CInt(json.Exists("result", 0).Exists("update_id")) + 1
             End If
-        Else
-            response.SetError = "botNotSet"
+            Return response
         End If
-        Return response
+        Return False
+    End Function
+    ' Get raw update JSON
+    Function GetRawUpdate(ByVal Optional optionalOffset As Integer = -1)
+        Dim response As CTelegramResponse
+        If (telegramBotSet = True) Then
+            Dim xmlhttp As New MSXML2.XMLHTTP60, url As String
+
+            If (optionalOffset > -1) Then
+                url = "https://api.telegram.org/bot" & BotToken & "/getUpdates?offset=" + optionalOffset.ToString
+            Else
+                url = "https://api.telegram.org/bot" & BotToken & "/getUpdates?offset=" + telMessageOffset.ToString
+            End If
+            xmlhttp.open("POST", url, False)
+            xmlhttp.send()
+
+            Dim json As JObject = JObject.Parse(xmlhttp.responseText)
+            response = New CTelegramResponse(json)
+            Return json.ToString
+        End If
+        Return False
     End Function
 End Class

@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.CompilerServices
-' This class is used to link together any custom Telegram command and function, what handles it
+﻿' This class is used to link together any custom Telegram command and function, what handles it
 ' Using this object function with name "commandObjectFunctionName" what exists in environment
 ' "commandObjectObjectRef" (Class, for example) can be called with ease using this object function
 ' "CallCommand", what gets array of optional parameters, and returns result of called function with
@@ -15,11 +14,15 @@
 '   d) A property value is being determined         - vbSet.
 '
 ' Example of use:
-' Dim cObject As New TelegramBotLib.CCommandObject("help", Me, "help", vbMethod)
-' Dim Args As Object()
-' Args(0) = "param1"
-' Args(1) = "param2"
-' return cObject.CallCommand(Args)
+'   Function help(param1 As String, param2 As String) As String
+'   return param1 + param2
+' End Function 
+' 
+' Function Execute()
+'   Dim cObject As New TelegramBotLib.CCommandObject("help", Me, "help", vbMethod)
+'   Dim Args = {"param1Arg","param2Arg"}
+'   return cObject.CallCommand(Args)
+' End Function
 Public Class CCommandObject
     Private commandObjectObjectRef As Object = Nothing          ' Environment inside what aim function will be searched
     Private commandObjectFunctionName As String = Nothing       ' Aim function name
@@ -99,6 +102,19 @@ Public Class CCommandObject
         End If
     End Function
 End Class
+' This class is used to assemble multiple CCommandObject instances into one object, working with what is more convenient
+'
+' Example of use:
+'   Function help(param1 As String, param2 As String) As String
+'   return param1 + param2
+' End Function 
+' 
+' Function Execute()
+'   Dim objCol As New CCommandObjectCollection
+'   objCol.Add(New CCommandObject("help", Me, "help", vbMethod))
+'   Dim Args = {"param1Arg","param2Arg"}
+'   return objCol.Item("help").CallCommand(Args)
+' End Function
 Public Class CCommandObjectCollection
     Private objCol As New Collection
     Private objColIsEmpty As New Boolean
@@ -188,17 +204,3 @@ Public Class CCommandObjectCollection
         Return Right(returnable, returnable.Length - delimiter.Length)
     End Function
 End Class
-
-Public Module StringArrayConverter
-    ' Turn array of strings into string, with elements of array divided with delimiter
-    <Extension()>
-    Public Function AsString(ByVal arr() As String, Optional ByVal delimiter As String = ",") As String
-        Dim i As Integer = 0
-        Dim returnable As String = ""
-        While (i < arr.Length)
-            returnable = returnable + delimiter + arr(i)
-            i = i + 1
-        End While
-        Return Right(returnable, returnable.Length - delimiter.Length)
-    End Function
-End Module
