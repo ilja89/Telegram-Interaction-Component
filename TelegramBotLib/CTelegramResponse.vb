@@ -1,33 +1,36 @@
-﻿' Public class, purpose of what is to store received Telegram message in form of regular message or command
-' IMPORTANT - after once set, any object properties can't be changed, only read
-'
-' Example of use
-' Dim response As New CTelegramResponse
-' Dim anyReceivedTelegramMessage As String = "/help 123"
-'!Then:
-'!1. To set regular message or command (auto detected, if message starts from "/" or "\"), use:
-' response.Text = anyReceivedTelegramMessage
-'!This case responseText will receive "/help 123". If this is command, additionally responseCommand will receive "help",
-'!responseCommandText will receive "123", responseIsCommand will be set on "True" and changeLocked will be set on "True"
-'
-'!2. To set error message, use:
-' response.SetError = anyReceivedTelegramMessage
-'!This case responseIsError will be set on "True", responseText will be set on "/help 123" and
-'!changeLocked will be set on "True"
+﻿
+''' <summary>
+''' Public class, purpose of what is to store received Telegram message in form of regular message or command<br/>
+''' After once set, any object properties can't be changed, only read<br/>
+'''<br/>
+''' Example of use:<br/><c>
+''' Dim response As New CTelegramResponse<br/>
+''' Dim anyReceivedTelegramMessage As String = "/help 123"<br/></c>
+''' Then:<br/>
+''' 1. To set regular message or command (auto detected, if message starts from "/" or "\"), use:<br/><c>
+''' response.Text = anyReceivedTelegramMessage<br/></c>
+''' This case Text will receive "/help 123". If this is command, additionally Command will receive "help",
+''' CommandText will receive "123", IsCommand will be set on "True" and changeLocked will be set on "True"<br/>
+''' <br/>
+''' 2. To set error message, use:<br/><c>
+''' response.SetError = anyReceivedTelegramMessage<br/></c>
+''' This case IsError will be set on "True", Text will be set on "/help 123" and
+''' changeLocked will be set on "True"<br/>
+''' </summary>
 Public Class CTelegramResponse
     Private responseText As String = ""             ' Response text
     Private responseCommand As String = ""          ' Response command
     Private responseCommandText As String = ""      ' Response command parameter
     Private responseIsCommand As Boolean = False    ' Shows if response is command or not
     Private responseIsError As Boolean = False      ' Shows if response is error or not
-    Private changeLocked As Boolean = False         ' Shows if response change is locked or not
+    Private changeIsLocked As Boolean = False       ' Shows if response change is locked or not
     Public Property Text As String
         Get
             Return responseText
         End Get
         Set(ByVal value As String)
-            If (changeLocked = False) Then
-                changeLocked = True
+            If (changeIsLocked = False) Then
+                changeIsLocked = True
                 responseText = value
                 If (value = "") Then
                     responseIsCommand = False
@@ -74,9 +77,14 @@ Public Class CTelegramResponse
             End If
         End Get
     End Property
+    Public ReadOnly Property IsLocked As String
+        Get
+            Return changeIsLocked
+        End Get
+    End Property
     Public WriteOnly Property SetError As String
         Set(ByVal errorCode As String)
-            changeLocked = True
+            changeIsLocked = True
             responseIsError = True
             responseIsCommand = False
             responseText = errorCode
@@ -92,6 +100,7 @@ Public Class CTelegramResponse
         Else
             SetError = "empty"
         End If
+        changeIsLocked = True
     End Sub
     Public Sub New()
 

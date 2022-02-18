@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form1
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Send = New System.Windows.Forms.Button()
@@ -28,7 +28,6 @@ Partial Class Form1
         Me.RichTextBoxInput = New System.Windows.Forms.RichTextBox()
         Me.GetRawUpdates = New System.Windows.Forms.Button()
         Me.SendKeyboardButton = New System.Windows.Forms.Button()
-        Me.InputBox = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'RichTextBox1
@@ -83,20 +82,11 @@ Partial Class Form1
         Me.SendKeyboardButton.Text = "Send Keyboard"
         Me.SendKeyboardButton.UseVisualStyleBackColor = True
         '
-        'InputBox
-        '
-        Me.InputBox.Location = New System.Drawing.Point(461, 13)
-        Me.InputBox.Name = "InputBox"
-        Me.InputBox.Size = New System.Drawing.Size(327, 40)
-        Me.InputBox.TabIndex = 7
-        Me.InputBox.Text = ""
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.InputBox)
         Me.Controls.Add(Me.SendKeyboardButton)
         Me.Controls.Add(Me.GetRawUpdates)
         Me.Controls.Add(Me.RichTextBoxInput)
@@ -115,5 +105,4 @@ Partial Class Form1
     Friend WithEvents RichTextBoxInput As RichTextBox
     Friend WithEvents GetRawUpdates As Button
     Friend WithEvents SendKeyboardButton As Button
-    Friend WithEvents InputBox As RichTextBox
 End Class

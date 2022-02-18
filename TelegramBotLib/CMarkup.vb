@@ -1,77 +1,147 @@
 ﻿Imports System.Runtime.CompilerServices
-' Extension module for Telegram HTML parse mode
-' Adds some text style modifiers
-' Example of use:
-' Dim message As String = "text"
-' Dim link As String = "www.anysite.com/something.html"
-' message.bold
-' link.inlineURL("This is inline URL")
+
+''' <summary>
+''' Extension module for Telegram HTML parse mode<br/>
+''' Adds some text style modifiers<br/>
+''' <br/>
+''' Example of use:<br/><c>
+''' Dim message As String = "text"<br/>
+''' Dim link As String = "www.anysite.com/something.html"<br/>
+''' message.bold<br/>
+''' link.inlineURL("This is inline URL")<br/></c>
+''' </summary>
 Public Module CMarkup
+    ''' <summary>
+    ''' Makes text bold
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function bold(ByVal input As String) As String
         input.HTMLReplace
         Return "<b>" + input + "</b>"
     End Function
+
+    ''' <summary>
+    ''' Makes text italic
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function italic(ByVal input As String) As String
         input.HTMLReplace
         Return "<i>" + input + "</i>"
     End Function
+
+    ''' <summary>
+    ''' Makes text underlined
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function underlined(ByVal input As String) As String
         input.HTMLReplace
         Return "<u>" + input + "</u>"
     End Function
+
+    ''' <summary>
+    ''' Makes text strikethrough
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function strikethrough(ByVal input As String) As String
         input.HTMLReplace
         Return "<s>" + input + "</s>"
     End Function
-    ' Create spoiler
+
+    ''' <summary>
+    ''' Creates spoiler
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function spoiler(ByVal input As String) As String
         input.HTMLReplace
         Return "<span class='tg-spoiler'>" + input + "</span>"
     End Function
-    ' Make hyperlink with visible text "text" and link "link"
-    ' Example:
-    ' link.inlineURL("This is inline URL")
+
+    ''' <summary>
+    ''' Makes hyperlink with visible text <paramref name="text"/> and link <paramref name="link"/><br/>
+    ''' Example:<br/><c>
+    ''' link.inlineURL("This is inline URL")</c>
+    ''' </summary>
+    ''' <param name="link"></param>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
     <Extension()>
     Function inlineURL(ByVal link As String, ByVal text As String) As String
         link.HTMLReplace
         text.HTMLReplace
         Return "<a href='" + link + "'>" + text + "</a>"
     End Function
-    ' Fixed width character text
+
+    ''' <summary>
+    ''' Fixed width character text
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function inlineFixedWidth(ByVal input As String) As String
         input.HTMLReplace
         Return "<code>" + input + "</code>"
     End Function
-    ' Fixed width character text
+
+    ''' <summary>
+    ''' Fixed width character text
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function fixedWidth(ByVal input As String) As String
         input.HTMLReplace
         Return "<pre>" + input + "</pre>"
     End Function
-    ' Adds new line into Telegram message
-    ' Example:
-    ' Dim message1 As String = "This is line 1"
-    ' Dim message2 As String = "This is line 2"
-    ' message1.newline + message2
-    '
-    ' Will result into:
-    ' This is line 1
-    ' This is line 2
+
+    ''' <summary>
+    ''' Adds new line into Telegram message<br/>
+    ''' Example:<br/><c>
+    ''' Dim message1 As String = "This is line 1"<br/>
+    ''' Dim message2 As String = "This is line 2"<br/>
+    ''' message1.newline + message2<br/></c>
+    '''<br/>
+    ''' Will result into:<br/>
+    ''' This is line 1<br/>
+    ''' This is line 2<br/>
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function newline(ByVal input As String) As String
         input.HTMLReplace
         Return input + "%0A"
     End Function
-    ' If there are any symbols in message like "<",">","&", they must be replaced with special HTML codes
-    ' This is requred because this case Telegram message is sent in HTML encoding
+
+
+    ''' <summary>
+    ''' If there are any symbols in message like &quot;&lt;&quot;,&quot;&gt;&quot;,&quot;&amp;&quot;,
+    ''' they must be replaced with special HTML codes<br/>
+    ''' This is requred because this case Telegram message is sent in HTML encoding
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     <Extension()>
     Function HTMLReplace(ByVal input As String) As String
         Return input.Replace("<", "&lt").Replace(">", "&gt").Replace("&", "&amp")
+    End Function
+
+    ''' <summary>
+    ''' Pseudo-tabulation
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Function tab(input As String) As String
+        Return input + "   "
     End Function
 End Module

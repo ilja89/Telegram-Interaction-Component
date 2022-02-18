@@ -1,5 +1,17 @@
 ﻿Imports System.Runtime.CompilerServices
+
+''' <summary>
+''' Used to extend some classes functionality
+''' </summary>
 Public Module CFunctionalExtensions
+
+    ''' <summary>
+    ''' Returns array of strings <paramref name="arr"/> as single string with elements of array divided by delimiter
+    ''' <paramref name="delimiter"/>
+    ''' </summary>
+    ''' <param name="arr"></param>
+    ''' <param name="delimiter"></param>
+    ''' <returns>String</returns>
     <Extension()>
     Public Function AsString(ByVal arr() As String, Optional ByVal delimiter As String = ",") As String
         Dim i As Integer = 0
@@ -10,6 +22,12 @@ Public Module CFunctionalExtensions
         End While
         Return Right(returnable, returnable.Length - delimiter.Length)
     End Function
+
+    ''' <summary>
+    ''' Used to convert array <paramref name="arr"></paramref> into collection
+    ''' </summary>
+    ''' <param name="arr"></param>
+    ''' <returns>Collection</returns>
     <Extension()>
     Public Function ToCollection(arr As Array) As Collection
         Dim col As New Collection
@@ -18,6 +36,21 @@ Public Module CFunctionalExtensions
         Next
         Return col
     End Function
+
+    ''' <summary>
+    ''' Used to safely handle &lt;<see cref="Newtonsoft.Json.Linq.JObject"/>&gt; with
+    ''' &lt;<see cref="Newtonsoft.Json.Linq.JObject.SelectToken(String)"/>&gt; function even in case it is empty
+    ''' </summary>
+    ''' <param name="jsonObject"></param>
+    ''' <param name="token"></param>
+    ''' <param name="itemIndex"></param>
+    ''' <returns>
+    ''' &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt; <paramref name="token"/> of &lt;<see cref="Newtonsoft.Json.Linq.JObject"/>&gt; if it exists<br/>
+    ''' If <paramref name="itemIndex"/> is entered, will try to return element of &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt;
+    ''' with index <paramref name="itemIndex"/> <br/>
+    ''' If requested <see cref="Newtonsoft.Json.Linq.JToken"/>&gt; of &lt;<see cref="Newtonsoft.Json.Linq.JObject"/>&gt;
+    ''' or its element with index <paramref name="itemIndex"/> doesn't exist, returns <c>Nothing</c>
+    ''' </returns>
     <Extension()>
     Public Function Exists(
                           jsonObject As Newtonsoft.Json.Linq.JObject,
@@ -42,7 +75,20 @@ Public Module CFunctionalExtensions
             End If
         End If
     End Function
-
+    ''' <summary>
+    ''' Used to safely handle &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt; with
+    ''' &lt;<see cref="Newtonsoft.Json.Linq.JToken.SelectToken(String)"/>&gt; function even in case it is empty
+    ''' </summary>
+    ''' <param name="jsonToken"></param>
+    ''' <param name="token"></param>
+    ''' <param name="itemIndex"></param>
+    ''' <returns>
+    ''' &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt; <paramref name="token"/> of &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt; if it exists<br/>
+    ''' If <paramref name="itemIndex"/> is entered, will try to return element of &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt;
+    ''' with index <paramref name="itemIndex"/> <br/>
+    ''' If requested <see cref="Newtonsoft.Json.Linq.JToken"/>&gt; of &lt;<see cref="Newtonsoft.Json.Linq.JToken"/>&gt;
+    ''' or its element with index <paramref name="itemIndex"/> doesn't exist, returns <c>Nothing</c>
+    ''' </returns>
     <Extension()>
     Public Function Exists(
                           jsonToken As Newtonsoft.Json.Linq.JToken,
@@ -66,14 +112,5 @@ Public Module CFunctionalExtensions
                 End If
             End If
         End If
-        'If (jsonToken Is Nothing) Then
-        'Return Nothing
-        'Else
-        'If (jsonToken.Count > 0) Then
-        'Return jsonToken.SelectToken(token)
-        'Else
-        'Return Nothing
-        'End If
-        'End If
     End Function
 End Module
