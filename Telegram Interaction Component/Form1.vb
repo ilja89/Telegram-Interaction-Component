@@ -56,8 +56,9 @@ Public Class Form1
 
     Private Sub SendKeyboardButton_Click(sender As Object, e As EventArgs) Handles SendKeyboardButton.Click
         Dim keyboard As New cbBtn({
-                                    New cBtn("Help list", 1, "/help list"), New cBtn("Help short", 2, "/help short"),
-                                    New cBtn("Help full", 2, "/help full")})
+                                    New cBtn("Help list", 1, "/help list"),
+                                    New cBtn("Help short", 2, "/help short"), New cBtn("Help full", 2, "/help full"),
+                                    New cBtn("Example Button", 3, "/help")})
         RichTextBox1.Text = telecom.sendTelegramInlineKeyboard(keyboard, RichTextBox1.Text.Replace("%newline", "".newline)).Text
     End Sub
 End Class

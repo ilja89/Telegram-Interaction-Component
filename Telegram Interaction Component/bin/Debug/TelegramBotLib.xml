@@ -22,5 +22,511 @@ TelegramBotLib
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:TelegramBotLib.CCommandObject">
+ <summary>
+  This class is used to link together any custom Telegram command and function, what handles it. <br/>
+ Using this object function with name &lt;<see cref="F:TelegramBotLib.CCommandObject.commandObjectFunctionName"/>&gt; what exists in environment<br/>
+ &lt;<see cref="F:TelegramBotLib.CCommandObject.commandObjectObjectRef"/>&gt; (class instance, for example) can be called with ease using this object function
+ &lt;<see cref="M:TelegramBotLib.CCommandObject.CallCommand(System.Object[])"/>&gt;, what gets array of optional parameters, and returns result of called function with
+ &lt;<see cref="F:TelegramBotLib.CCommandObject.commandObjectFunctionName"/>&gt; name.<br/>
+<br/>
+ Example of use:<br/><code>
+___Function help(param1 As String, param2 As String) As String<br/>
+___return param1 + param2<br/>
+ End Function <br/>
+ <br/>
+ Function Execute()<br/>
+___Dim cObject As New TelegramBotLib.CCommandObject("help", Me, "help", vbMethod)<br/>
+___Dim Args = {"param1Arg","param2Arg"}<br/>
+___return cObject.CallCommand(Args)<br/>
+ End Function<br/></code>
+ </summary>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.Command">
+ <summary>
+ A Telegram command, to what this command object is related<br/>
+ Must be without /
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.IsCreated">
+ <summary>
+ Shows if object is created
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.ObjectRef">
+ <summary>
+ Environment inside what aim function will be searched
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.FunctionName">
+ <summary>
+ Returns name of function stored in instance of &lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt;
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.FunctionCallType">
+ <summary>
+a) A property value is being retrieved          - vbGet. <br/>
+b) An Object property value is being determined - vbLet.<br/>
+c) A method is being invoked                    - vbMethod.<br/>
+d) A property value is being determined         - vbSet.<br/>
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.ShortDescription">
+ <summary>
+ Short description of function stored in instance of &lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt;
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObject.FullDescription">
+ <summary>
+ Full description of function stored in instance of &lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt;
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObject.#ctor(System.String,System.Object@,System.String,Microsoft.VisualBasic.CallType,System.String,System.String)">
+ <summary>
+  Constructor reques 6,3 of them are optional properties:<br/>
+ 1. constructorCommand As String             - command from Telegram without /.<br/>
+ 2. constructorObjectRef As Object           - environment, from what this function will be called.<br/>
+ 3. constructorFunctionName As String        - name of function in environment "constructorObjectRef"<br/>
+ 4. constructorFunctionCallType As CallType  - type of call. There are few types of calls in VB:<br/>
+___a) A property value is being retrieved          - vbGet. <br/>
+___b) An Object property value is being determined - vbLet.<br/>
+___c) A method is being invoked                    - vbMethod.<br/>
+___d) A property value is being determined         - vbSet.<br/>
+<br/>
+ 5. constructorCommandShortDescription       - short description of function<br/>
+ 6. constructorCommandFullDescription        - full description of function<br/>
+ </summary>
+ <param name="constructorCommand"></param>
+ <param name="constructorObjectRef"></param>
+ <param name="constructorFunctionName"></param>
+ <param name="constructorFunctionCallType"></param>
+ <param name="constructorCommandShortDescription"></param>
+ <param name="constructorCommandFullDescription"></param>
+</member>
+<member name="M:TelegramBotLib.CCommandObject.CallCommand(System.Object[])">
+ <summary>
+ Calls command from instance of &lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt;
+ </summary>
+ <param name="Args"></param>
+ <returns>Result of funciton, if it exists</returns>
+</member>
+<member name="T:TelegramBotLib.CCommandObjectCollection">
+ <summary>
+ This class is used to assemble multiple &lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; instances into one object collection, working with what is more convenient<br/>
+<br/>
+ Example of use:<br/><c>
+___Function help(param1 As String, param2 As String) As String<br/>
+___return param1 + param2<br/>
+ End Function <br/>
+ <br/>
+ Function Execute()<br/>
+___Dim objCol As New CCommandObjectCollection<br/>
+___objCol.Add(New CCommandObject("help", Me, "help", vbMethod))<br/>
+___Dim Args = {"param1Arg","param2Arg"}<br/>
+___return objCol.Item("help").CallCommand(Args)<br/>
+ End Function<br/></c>
+ </summary>
+</member>
+<member name="P:TelegramBotLib.CCommandObjectCollection.IsEmpty">
+ <summary>
+ Shows if collection is empty
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CCommandObjectCollection.Count">
+ <summary>
+ Return number of objects in collection
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Item(System.String)">
+ <summary>
+ Get item from collection by key
+ </summary>
+ <param name="key"></param>
+ <returns>Instance of&lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; if it was inside collection<br/>
+ Otherwise, returns <c>Nothing</c></returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Item(System.Int32)">
+ <summary>
+ Get item from collection by index
+ </summary>
+ <param name="index"></param>
+ <returns>Instance of&lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; if it was inside collection<br/>
+ Otherwise, returns <c>Nothing</c></returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Add(TelegramBotLib.CCommandObject@)">
+ <summary>
+ Adds instance of&lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; into collection
+ </summary>
+ <param name="commandObject"></param>
+ <returns>Updated collection</returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Remove(System.String)">
+ <summary>
+ Removes instance of&lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; from the collection using key
+ </summary>
+ <param name="key"></param>
+ <returns>Updated collection</returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Remove(System.Int32)">
+ <summary>
+ Removes instance of&lt;<see cref="T:TelegramBotLib.CCommandObject"/>&gt; from the collection using index
+ </summary>
+ <param name="index"></param>
+ <returns>Updated collection</returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Contains(System.String)">
+ <summary>
+ Checks if object with this key <c>(Telegram command)</c> is inside collection
+ </summary>
+ <param name="key"></param>
+ <returns>Boolean</returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.Contains(System.String[])">
+ <summary>
+ Checks if object with any these keys <c>(Telegram command)</c> is inside collection
+ </summary>
+ <param name="key"></param>
+ <returns>Boolean</returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.List">
+ <summary>
+ Returns &lt;<see cref="P:TelegramBotLib.CCommandObject.Command"/>&gt; strings of all objects in collection as array of strings
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CCommandObjectCollection.AsString(System.String)">
+ <summary>
+ Return &lt;<see cref="P:TelegramBotLib.CCommandObject.Command"/>&gt; strings of all objects in collection as string with
+ &lt;<see cref="P:TelegramBotLib.CCommandObject.Command"/>&gt; texts divided with delimiter <paramref name="delimiter"/>  
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:TelegramBotLib.CInlineKeyboardButtonBuilder">
+ <summary>
+ This class is used for inline buttons builder<br/>
+ With this you can add buttons to your messages<br/>
+ To do this, and get ready-to-send JSON for keyboard, you have to create new instance of &lt;<see cref="T:TelegramBotLib.CInlineKeyboardButtonBuilder"/>&gt;,
+ sending array of buttons inside as parameter. Then you can use &lt;<see cref="M:TelegramBotLib.CInlineKeyboardButtonBuilder.Build"/>&gt; to get JSON.<br/><br/>
+ <c>
+ Example:<br/>
+ Dim buttons As New CInlineKeyboardButtonBuilder({<br/>
+ ___New CInlineKeyboardButton("btn1", 1, "btn2"), New CInlineKeyboardButton("btn2", 1, "btn2"),<br/>
+ ___New CInlineKeyboardButton("btn3", 1, "btn2"),New CInlineKeyboardButton("btn4", 2, "btn2"),<br/>
+ ___New CInlineKeyboardButton("btn5", 2, "btn2"), New CInlineKeyboardButton("btn6", 2, "btn2")})<br/>
+ Dim builtJson As String = buttons.Build<br/>
+ Then you can add this builtJson after "&amp;reply_markup="
+ </c>
+ </summary>
+</member>
+<member name="T:TelegramBotLib.CInlineKeyboardButton">
+ <summary>
+ This class is used to describe instances of Telegram inline buttons
+ </summary>
+</member>
+<member name="P:TelegramBotLib.CInlineKeyboardButton.Layer">
+ <summary>
+ Number of layer, on what this button is placed
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CInlineKeyboardButton.Text">
+ <summary>
+ Button text
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CInlineKeyboardButton.Build">
+ <summary>
+ Function to build a Json string out of button instance &lt;<see cref="T:TelegramBotLib.CInlineKeyboardButton"/>&gt;
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CInlineKeyboardButton.#ctor(System.String,System.Int32,System.String,System.String)">
+ <summary>
+ <paramref name="text"/> - text of new button<br/>
+ <paramref name="layer"/> - layer of new button<br/>
+ <paramref name="callBackData"/> - text what will receive Telegram bot when button is pressed<br/>
+ <paramref name="URL"/> - Optionally, URL of button. User will be sent on this URL when button is pressed
+ </summary>
+ <param name="text"></param>
+ <param name="layer"></param>
+ <param name="callBackData"></param>
+ <param name="URL"></param>
+</member>
+<member name="T:TelegramBotLib.CFunctionalExtensions">
+ <summary>
+ Used to extend some classes functionality
+ </summary>
+</member>
+<member name="M:TelegramBotLib.CFunctionalExtensions.AsString(System.String[],System.String)">
+ <summary>
+ Returns array of strings <paramref name="arr"/> as single string with elements of array divided by delimiter
+ <paramref name="delimiter"/>
+ </summary>
+ <param name="arr"></param>
+ <param name="delimiter"></param>
+ <returns>String</returns>
+</member>
+<member name="M:TelegramBotLib.CFunctionalExtensions.ToCollection(System.Array)">
+ <summary>
+ Used to convert array <paramref name="arr"></paramref> into collection
+ </summary>
+ <param name="arr"></param>
+ <returns>Collection</returns>
+</member>
+<member name="M:TelegramBotLib.CFunctionalExtensions.Exists(Newtonsoft.Json.Linq.JObject,System.String,System.Int32)">
+ <summary>
+ Used to safely handle &lt;<see cref="T:Newtonsoft.Json.Linq.JObject"/>&gt; with
+ &lt;<see cref="M:Newtonsoft.Json.Linq.JToken.SelectToken(System.String)"/>&gt; function even in case it is empty
+ </summary>
+ <param name="jsonObject"></param>
+ <param name="token"></param>
+ <param name="itemIndex"></param>
+ <returns>
+ &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; <paramref name="token"/> of &lt;<see cref="T:Newtonsoft.Json.Linq.JObject"/>&gt; if it exists<br/>
+ If <paramref name="itemIndex"/> is entered, will try to return element of &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt;
+ with index <paramref name="itemIndex"/> <br/>
+ If requested <see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; of &lt;<see cref="T:Newtonsoft.Json.Linq.JObject"/>&gt;
+ or its element with index <paramref name="itemIndex"/> doesn't exist, returns <c>Nothing</c>
+ </returns>
+</member>
+<member name="M:TelegramBotLib.CFunctionalExtensions.Exists(Newtonsoft.Json.Linq.JToken,System.String,System.Int32)">
+ <summary>
+ Used to safely handle &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; with
+ &lt;<see cref="M:Newtonsoft.Json.Linq.JToken.SelectToken(System.String)"/>&gt; function even in case it is empty
+ </summary>
+ <param name="jsonToken"></param>
+ <param name="token"></param>
+ <param name="itemIndex"></param>
+ <returns>
+ &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; <paramref name="token"/> of &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; if it exists<br/>
+ If <paramref name="itemIndex"/> is entered, will try to return element of &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt;
+ with index <paramref name="itemIndex"/> <br/>
+ If requested <see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt; of &lt;<see cref="T:Newtonsoft.Json.Linq.JToken"/>&gt;
+ or its element with index <paramref name="itemIndex"/> doesn't exist, returns <c>Nothing</c>
+ </returns>
+</member>
+<member name="T:TelegramBotLib.CTelegramResponse">
+ <summary>
+ Public class, purpose of what is to store received Telegram message in form of regular message or command<br/>
+ After once set, any object properties can't be changed, only read<br/>
+<br/>
+ Example of use:<br/><c>
+ Dim response As New CTelegramResponse<br/>
+ Dim anyReceivedTelegramMessage As String = "/help 123"<br/></c>
+ Then:<br/>
+ 1. To set regular message or command (auto detected, if message starts from "/" or "\"), use:<br/><c>
+ response.Text = anyReceivedTelegramMessage<br/></c>
+ This case Text will receive "/help 123". If this is command, additionally Command will receive "help",
+ CommandText will receive "123", IsCommand will be set on "True" and changeLocked will be set on "True"<br/>
+ <br/>
+ 2. To set error message, use:<br/><c>
+ response.SetError = anyReceivedTelegramMessage<br/></c>
+ This case IsError will be set on "True", Text will be set on "/help 123" and
+ changeLocked will be set on "True"<br/>
+ </summary>
+</member>
+<member name="T:TelegramBotLib.CMarkup">
+ <summary>
+ Extension module for Telegram HTML parse mode<br/>
+ Adds some text style modifiers<br/>
+ <br/>
+ Example of use:<br/><c>
+ Dim message As String = "text"<br/>
+ Dim link As String = "www.anysite.com/something.html"<br/>
+ message.bold<br/>
+ link.inlineURL("This is inline URL")<br/></c>
+ </summary>
+</member>
+<member name="M:TelegramBotLib.CMarkup.bold(System.String)">
+ <summary>
+ Makes text bold
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.italic(System.String)">
+ <summary>
+ Makes text italic
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.underlined(System.String)">
+ <summary>
+ Makes text underlined
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.strikethrough(System.String)">
+ <summary>
+ Makes text strikethrough
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.spoiler(System.String)">
+ <summary>
+ Creates spoiler
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.inlineURL(System.String,System.String)">
+ <summary>
+ Makes hyperlink with visible text <paramref name="text"/> and link <paramref name="link"/><br/>
+ Example:<br/><c>
+ link.inlineURL("This is inline URL")</c>
+ </summary>
+ <param name="link"></param>
+ <param name="text"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.inlineFixedWidth(System.String)">
+ <summary>
+ Fixed width character text
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.fixedWidth(System.String)">
+ <summary>
+ Fixed width character text
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.newline(System.String)">
+ <summary>
+ Adds new line into Telegram message<br/>
+ Example:<br/><c>
+ Dim message1 As String = "This is line 1"<br/>
+ Dim message2 As String = "This is line 2"<br/>
+ message1.newline + message2<br/></c>
+<br/>
+ Will result into:<br/>
+ This is line 1<br/>
+ This is line 2<br/>
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.HTMLReplace(System.String)">
+ <summary>
+ If there are any symbols in message like &quot;&lt;&quot;,&quot;&gt;&quot;,&quot;&amp;&quot;,
+ they must be replaced with special HTML codes<br/>
+ This is requred because this case Telegram message is sent in HTML encoding
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CMarkup.tab(System.String)">
+ <summary>
+ Pseudo-tabulation
+ </summary>
+ <param name="input"></param>
+ <returns></returns>
+</member>
+<member name="T:TelegramBotLib.CTelegramBot">
+ <summary>
+ Class to create instance of Telegram bot
+ </summary>
+</member>
+<member name="P:TelegramBotLib.CTelegramBot.BotName">
+ <summary>
+ Name of bot
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CTelegramBot.BotToken">
+ <summary>
+ Bot token
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:TelegramBotLib.CTelegramBot.ChatID">
+ <summary>
+ Id of chat into what bot will be sending messages
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.#ctor(System.String,System.String,System.String)">
+ <summary>
+ Create new bot
+ </summary>
+ <param name="botName"></param>
+ <param name="botToken"></param>
+ <param name="chatID"></param>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.SendTelegramMessage(System.String)">
+ <summary>
+ Function to send messages to Telegram<br/>
+ Returns json response with information about message sent<br/>
+<br/>
+ Error codes:<br/>
+ "noMessage" - empty input string<br/>
+ "botNotSet" - bot is not set (checks "Private telegramBotSet As Boolean")<br/>
+ </summary>
+ <param name="message"></param>
+ <returns>Instance of &lt;<see cref="T:TelegramBotLib.CTelegramResponse"/>&gt;</returns>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.sendTelegramInlineKeyboard(TelegramBotLib.CInlineKeyboardButtonBuilder,System.String)">
+ <summary>
+ This is function to send inline keyboards in Telegram<br/>
+ It request:<br/>
+ - Instance of &lt;<see cref="T:TelegramBotLib.CInlineKeyboardButtonBuilder"/>&gt; to build up a keyboard json<br/>
+ - Optionally a <paramref name="message"></paramref> what will be sent together with keyboard<br/>
+<br/>
+ Example:<br/><c>
+ Dim keyboard As New TelegramBotLib.CInlineKeyboardButtonBuilder({<br/>
+ ___New TelegramBotLib.CInlineKeyboardButton("Help", 1, "/help"),<br/>
+ ___New TelegramBotLib.CInlineKeyboardButton("Help short", 1, "/help short"),<br/>
+ ___New TelegramBotLib.CInlineKeyboardButton("Help full", 1, "/help full"),<br/>
+ ___New TelegramBotLib.CInlineKeyboardButton("btn5", 2, "1234"),<br/>
+ ___New TelegramBotLib.CInlineKeyboardButton("btn6", 2, "1234")})<br/>
+ RichTextBox1.Text = TelegramBotLib.CTelegramBot.sendTelegramInlineKeyboard
+ (InputBox.Text.Replace("%newline", "".newline), keyboard).Text</c>
+ </summary>
+ <param name="keyboard"></param>
+ <param name="message"></param>
+ <returns>Instance of &lt;<see cref="T:TelegramBotLib.CTelegramResponse"/>&gt;</returns>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.GetUpdate(System.Int32)">
+ <summary>
+ Function to receive messages from Telegram<br/>
+ Returns text of first message from array of messages received after message with 
+ id = <paramref name="optionalOffset"/> (if set) (telMessageOffset)<br/>
+ <br/>
+ Error codes:<br/>
+ "empty" - message request is empty, no messages received since last message<br/>
+ "botNotSet" - bot is not set (checks "Private telegramBotSet As Boolean")<br/>
+ </summary>
+ <param name="optionalOffset"></param>
+ <returns>Instance of &lt;<see cref="T:TelegramBotLib.CTelegramResponse"/>&gt;</returns>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.GetRawUpdate(System.Int32)">
+ <summary>
+ Get raw update JSON
+ </summary>
+ <param name="optionalOffset"></param>
+ <returns>JSON string</returns>
+</member>
+<member name="M:TelegramBotLib.CTelegramBot.SpecialFormat(System.String)">
+ <summary>
+ Turns some tags in raw text to HTML format
+ </summary>
+ <param name="message"></param>
+ <returns></returns>
+</member>
 </members>
 </doc>

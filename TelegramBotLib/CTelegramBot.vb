@@ -76,6 +76,17 @@ Public Class CTelegramBot
             telegramBotSet = True
         End If
     End Sub
+    Public Sub New()
+
+    End Sub
+    Public Sub SetBot(botName As String, botToken As String, chatID As String)
+        If (botName <> "" And botToken <> "" And chatID <> "") Then
+            telegramBotName = botName
+            telegramBotToken = botToken
+            telegramChatID = chatID
+            telegramBotSet = True
+        End If
+    End Sub
 
 
     ''' <summary>
@@ -178,7 +189,6 @@ Public Class CTelegramBot
 
             Dim json As JObject = JObject.Parse(xmlhttp.responseText)
             ' Check for standart text message or keyboard pressed
-            Dim a = json.Exists("result", 0).Exists("update_id")
             response = New CTelegramResponse(json)
             If (json.Exists("result", 0).Exists("update_id") IsNot Nothing) Then
                 telMessageOffset = CInt(json.Exists("result", 0).Exists("update_id")) + 1
