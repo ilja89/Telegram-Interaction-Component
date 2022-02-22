@@ -1,4 +1,13 @@
-﻿Imports Newtonsoft.Json
+﻿' FILENAME: CTelegramBot.vb
+' AUTHOR: El Plan : Ilja Kuznetsov.
+' CREATED: 17.02.2022
+' CHANGED: 22.02.2022
+'
+' DESCRIPTION: See below↓↓↓
+
+' Related components: CInlineKeyboardButton, CMarkup, CTelegramResponse
+
+Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
 ''' <summary>

@@ -1,4 +1,12 @@
-﻿
+﻿' FILENAME: CTelegramResponse.vb
+' AUTHOR: El Plan : Ilja Kuznetsov.
+' CREATED: 17.02.2022
+' CHANGED: 22.02.2022
+'
+' DESCRIPTION: See below↓↓↓
+
+' Related components: CTelegramBot
+
 ''' <summary>
 ''' Public class, purpose of what is to store received Telegram message in form of regular message or command<br/>
 ''' After once set, any object properties can't be changed, only read<br/>

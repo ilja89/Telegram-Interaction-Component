@@ -1,4 +1,13 @@
-﻿Imports System.Runtime.CompilerServices
+﻿' FILENAME: CMarkup.vb
+' AUTHOR: El Plan : Ilja Kuznetsov.
+' CREATED: 16.02.2022
+' CHANGED: 22.02.2022
+'
+' DESCRIPTION: See below↓↓↓
+
+' Related components: CTelegramBot
+
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' Extension module for Telegram HTML parse mode<br/>

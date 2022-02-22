@@ -1,4 +1,13 @@
-﻿Imports System.Runtime.CompilerServices
+﻿' FILENAME: CFunctionalExtensions.vb
+' AUTHOR: El Plan : Ilja Kuznetsov.
+' CREATED: 17.02.2022
+' CHANGED: 22.02.2022
+'
+' DESCRIPTION: See below↓↓↓
+
+' Related components: No related components, general use
+
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' Used to extend some classes functionality
